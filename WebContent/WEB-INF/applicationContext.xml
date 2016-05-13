@@ -27,7 +27,6 @@
 		<property name="user" value="admin" />
 		<property name="passwd" value="232431" />
 		<property name="urlAviso" value="http://spgprs.dyndns.org:8061/sendmsg" />
-		<property name="urlNueveOnce" value="http://20.0.20.111:8080/SerialWriter/SerialWriter" />
 		
 		<property name="mensajeAvisoAlta" value="ALTA ALERTA - PRUEBAS" />
 		<property name="mensajeAvisoPendiente" value="ALERTA PENDIENTE" />

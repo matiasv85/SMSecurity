@@ -10,31 +10,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import awers.sistema.Sistema;
 
-
 @Controller
 @RequestMapping("/procesadorDeMensajes")
 public class ProcesadorDeMensajes implements ApplicationContextAware {
-	
+
 	private Sistema sistema;
-	
-	
-	@RequestMapping(value="/procesarMensaje", method = RequestMethod.GET)
-	public void procesarMensaje(@RequestParam("id") String id, @RequestParam("dir") String dir){
-		
-		sistema.getAdministradorDeHilos().levantarAlerta(id, dir);
-		
+
+	@RequestMapping(value = "/procesarMensaje", method = RequestMethod.GET)
+	public void procesarMensaje(@RequestParam("client_number") String clientNumber,
+	        @RequestParam("telefono") String telefono,
+	        @RequestParam("tiempo_duracion_alerta") int tiempoDuracionAlerta,
+	        @RequestParam("codigo_alerta") String codigoAlerta) {
+
+		this.sistema.getAdministradorDeHilos().levantarAlerta(clientNumber, telefono,
+		        tiempoDuracionAlerta, codigoAlerta);
+
 	}
-	
-	@RequestMapping(value="/bajarAlerta", method = RequestMethod.GET)
-	public void bajarAlerta(@RequestParam("id") String id, @RequestParam("dir") String dir){
-		sistema.getAdministradorDeHilos().anularAlerta(id, dir);
-		
+
+	@RequestMapping(value = "/bajarAlerta", method = RequestMethod.GET)
+	public void bajarAlerta(@RequestParam("id") String id, @RequestParam("dir") String dir) {
+		this.sistema.getAdministradorDeHilos().anularAlerta(id, dir);
+
 	}
-	
+
 	@Override
 	public void setApplicationContext(ApplicationContext context) throws BeansException {
 		this.sistema = (Sistema) context.getBean("sistema");
-		
+
+	}
+
+	@RequestMapping(value = "/helth-check", method = RequestMethod.GET)
+	public String helthCheck() {
+		return "{status : OK!}";
+
 	}
 
 }

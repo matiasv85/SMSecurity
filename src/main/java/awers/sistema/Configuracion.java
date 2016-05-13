@@ -1,121 +1,160 @@
 package awers.sistema;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class Configuracion {
-	
+
 	private int tiempoPrimerAlerta;
 	private int tiempoSegundoAlerta;
-	
-	//?user=admin&passwd=232431&cat=1&to=%s&text=%s
-	
+
+	// ?user=admin&passwd=232431&cat=1&to=%s&text=%s
+
 	private String user;
 	private String passwd;
-	
+
 	private String urlAviso;
-	private String urlNueveOnce;
-	
+	private String urlFinAlerta;
+
 	private String mensajeAvisoAlta;
 	private String mensajeAvisoPendiente;
 	private String mensajeBajaAlerta;
 	private String mensajeNueveOnce;
 	private String mensajeNoServicio;
 	private String mensajeAlertaExistente;
-	
-	
-	
+
 	public int getTiempoPrimerAlerta() {
-		return tiempoPrimerAlerta;
+		return this.tiempoPrimerAlerta;
 	}
+
 	public void setTiempoPrimerAlerta(int tiempoPrimerAlerta) {
 		this.tiempoPrimerAlerta = tiempoPrimerAlerta;
 	}
-	
+
 	public int getTiempoSegundoAlerta() {
-		return tiempoSegundoAlerta;
+		return this.tiempoSegundoAlerta;
 	}
+
 	public void setTiempoSegundoAlerta(int tiempoSegundoAlerta) {
 		this.tiempoSegundoAlerta = tiempoSegundoAlerta;
 	}
-	
-	
-	
+
 	public String getUser() {
-		return user;
+		return this.user;
 	}
+
 	public void setUser(String user) {
 		this.user = user;
 	}
+
 	public String getPasswd() {
-		return passwd;
+		return this.passwd;
 	}
+
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+
 	public String getUrlAviso() {
-		return urlAviso;
+		return this.urlAviso;
 	}
+
 	public void setUrlAviso(String urlAviso) {
-		String definitiva = urlAviso+"?user="+user+"&passwd="+passwd+"&cat=1&to=%s&text=%s";
+		String definitiva = urlAviso + "?user=" + this.user + "&passwd=" + this.passwd
+		        + "&cat=1&to=%s&text=%s";
 		this.urlAviso = definitiva;
 	}
-	public String getUrlNueveOnce() {
-		return urlNueveOnce;
+
+	public String getUrlFinAlerta() {
+		return this.urlFinAlerta;
 	}
-	public void setUrlNueveOnce(String urlNueveOnce) {
-		String definitiva = urlNueveOnce+"?CLIENT_NUMBER=%s&type=ALERT";
-		this.urlNueveOnce = definitiva;
+
+	public void setUrlFinAlerta(String urlFinAlerta) {
+		// String definitiva = urlNueveOnce+"?CLIENT_NUMBER=%s&type=ALERT";
+		this.urlFinAlerta = urlFinAlerta;
 	}
+
 	public String getMensajeAvisoAlta() {
-		return mensajeAvisoAlta;
+		return this.mensajeAvisoAlta;
 	}
-	
+
 	public void setMensajeAvisoAlta(String mensajeAvisoAlta) {
-		this.mensajeAvisoAlta = formatoTexto(mensajeAvisoAlta);
+		this.mensajeAvisoAlta = this.formatoTexto(mensajeAvisoAlta);
 	}
+
 	public String getMensajeAvisoPendiente() {
-		return mensajeAvisoPendiente;
+		return this.mensajeAvisoPendiente;
 	}
+
 	public void setMensajeAvisoPendiente(String mensajeAvisoPendiente) {
-		this.mensajeAvisoPendiente = formatoTexto(mensajeAvisoPendiente);
+		this.mensajeAvisoPendiente = this.formatoTexto(mensajeAvisoPendiente);
 	}
+
 	public String getMensajeNueveOnce() {
-		return mensajeNueveOnce;
+		return this.mensajeNueveOnce;
 	}
+
 	public void setMensajeNueveOnce(String mensajeNueveOnce) {
-		this.mensajeNueveOnce = formatoTexto(mensajeNueveOnce);
+		this.mensajeNueveOnce = this.formatoTexto(mensajeNueveOnce);
 	}
-	
+
 	public String getMensajeBajaAlerta() {
-		return mensajeBajaAlerta;
+		return this.mensajeBajaAlerta;
 	}
-	
+
 	public void setMensajeBajaAlerta(String mensajeBajaAlerta) {
-		this.mensajeBajaAlerta = formatoTexto(mensajeBajaAlerta);
+		this.mensajeBajaAlerta = this.formatoTexto(mensajeBajaAlerta);
 	}
-	
+
 	public String getMensajeNoServicio() {
-		return mensajeNoServicio;
+		return this.mensajeNoServicio;
 	}
-	
+
 	public void setMensajeNoServicio(String mensajeNoServicio) {
-		this.mensajeNoServicio = formatoTexto(mensajeNoServicio);
+		this.mensajeNoServicio = this.formatoTexto(mensajeNoServicio);
 	}
-	
+
 	public String getMensajeAlertaExistente() {
-		return mensajeAlertaExistente;
+		return this.mensajeAlertaExistente;
 	}
+
 	public void setMensajeAlertaExistente(String mensajeAlertaExistente) {
-		this.mensajeAlertaExistente = formatoTexto(mensajeAlertaExistente);
+		this.mensajeAlertaExistente = this.formatoTexto(mensajeAlertaExistente);
 	}
-	private String formatoTexto(String original){
+
+	private String formatoTexto(String original) {
 		return original.replace(" ", "%20");
 	}
-	
+
 	@SuppressWarnings("unused")
-	private void inicializar(){
+	private void inicializar() {
+		this.loadProperties();
 		System.out.println("Sistema inicializado!");
-		
+
 	}
-	
-	
-	
+
+	private void loadProperties() {
+		Properties prop = new Properties();
+		InputStream input = null;
+		try {
+			input = new FileInputStream("configuration.properties");
+
+			// load a properties file
+			prop.load(input);
+			this.setUrlFinAlerta(prop.getProperty("url_fin_alerta"));
+		} catch (IOException ex) {
+			System.out.println(ex.getMessage());
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+		}
+
+	}
 }
