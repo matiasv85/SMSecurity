@@ -20,7 +20,7 @@ public class AdministradorDeHilos implements ApplicationContextAware {
 	private ApplicationContext contexto;
 	private AlertaDAO alertaDao;
 
-	static Logger log = Logger.getLogger(AdministradorDeHilos.class.getName());
+	private static final Logger log = Logger.getLogger(AdministradorDeHilos.class.getName());
 
 	public AdministradorDeHilos() {
 		this.alertas = new HashMap<String, Alerta>();

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 public class Configuracion {
+	private static final Logger LOG = Logger.getLogger(Configuracion.class.getName());
 
 	private int tiempoPrimerAlerta;
 	private int tiempoSegundoAlerta;
@@ -131,6 +134,7 @@ public class Configuracion {
 	private void inicializar() {
 		this.loadProperties();
 		System.out.println("Sistema inicializado!");
+		LOG.debug("Sistema inicializado!");
 
 	}
 

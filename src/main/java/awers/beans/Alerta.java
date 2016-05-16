@@ -16,7 +16,7 @@ public class Alerta implements Runnable {
 	private String clientNumber;
 	private String codigoAlerta;
 
-	static Logger log = Logger.getLogger(InterfazPHP.class.getName());
+	private static final Logger LOG = Logger.getLogger(Alerta.class.getName());
 
 	public Alerta(String clientNumber, InterfazPHP interfazPHP, int tiempoEspera,
 	        String codigoAlerta) {
@@ -39,6 +39,7 @@ public class Alerta implements Runnable {
 		} catch (InterruptedException e) {
 			// this.interfazPHP.informarBajaAlerta(this.clientNumber,
 			// this.codigoAlerta);
+			LOG.info(e.getMessage());
 		}
 
 	}
