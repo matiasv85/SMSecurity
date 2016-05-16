@@ -95,7 +95,7 @@ public class InterfazPHP {
 			URL url = new URL(urlStr);
 			// URL url = new
 			// URL("http://spgprs.dyndns.org:8061/sendmsg?user=admin&passwd=232431&cat=1&to=2215468204&text=PruebasMatias");
-
+			log.debug(("Url: " + url.toString()));
 			HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
 			httpCon.setDoOutput(false);
 			httpCon.setRequestMethod("GET");
@@ -107,5 +107,4 @@ public class InterfazPHP {
 			log.error(e.getMessage());
 		}
 	}
-
 }

@@ -1,6 +1,5 @@
 package awers.sistema;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -139,7 +138,9 @@ public class Configuracion {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {
-			input = new FileInputStream("configuration.properties");
+			// input = new FileInputStream("configuracion.properties");
+			input = Configuracion.class.getClassLoader().getResourceAsStream(
+			        "configuracion.properties");
 
 			// load a properties file
 			prop.load(input);

@@ -17,9 +17,9 @@
 		<property name="password" value="" />
 	</bean>
 
-	<bean id="clienteDAO" class="awers.modelo.dao.ClienteDAO">
+	<!--  bean id="clienteDAO" class="awers.modelo.dao.ClienteDAO">
 		<property name="dataSource" ref="dataSource" />
-	</bean>
+	</bean-->
 	<bean id="alertaDAO" class="awers.modelo.dao.AlertaDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
@@ -44,7 +44,7 @@
 	</bean>
 	
 	<bean id="administradorDeHilos" class="awers.proceso.AdministradorDeHilos">
-		<property name="clienteDao" ref="clienteDAO" />
+		<!-- property name="clienteDao" ref="clienteDAO" /-->
 		<property name="alertaDao" ref="alertaDAO" />
 	</bean>
 	
